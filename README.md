@@ -42,4 +42,4 @@ To execute the tests:
   npx playwright test tests/{test_file_name}.test.ts 
 - or 
 ```bash 
-node tests//{test_file_name}
+node tests//{test_file_name}.test.ts
