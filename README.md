@@ -40,4 +40,6 @@ To execute the tests:
 - Run individual test files:
   ```bash
   npx playwright test tests/{test_file_name}.test.ts 
-- or node tests//{test_file_name}
+- or 
+```bash 
+node tests//{test_file_name}
