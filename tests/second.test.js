@@ -1,6 +1,6 @@
 import {test} from "@playwright/test";
 
-test.only("second test", async ({ page }) => {
+test("second test", async ({ page }) => {
   await page.goto("https://www.trumpf.com/de_INT/")
 
   await page.getByRole('button', { name: 'Alle Cookies akzeptieren' }).click();
