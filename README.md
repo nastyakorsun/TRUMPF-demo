@@ -39,7 +39,7 @@ To execute the tests:
 
 - Run individual test files:
   ```bash
-  npx playwright test tests/{test_file_name}.test.ts 
+  npx playwright test tests/{test_file_name}.spec.ts 
 - or 
 ```bash 
-node tests//{test_file_name}.test.ts
+node tests/{test_file_name}.test.js
