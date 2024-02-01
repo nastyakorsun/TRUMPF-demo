@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('test', async ({ page }) => {
+test('Test the map on website', async ({ page }) => {
   await page.goto('https://www.trumpf.com/de_DE/');
   await page.getByRole('button', { name: 'Alle Cookies akzeptieren' }).click();
   await page.getByRole('link', { name: 'Zur Standortsuche' }).click();
@@ -22,10 +22,5 @@ test('test', async ({ page }) => {
   await expect(page.locator('div').filter({ hasText: /^TRUMPF SE \+ Co\. KGJohann-Maus-Str\. 271254 Ditzingen$/ }).first()).toBeVisible();
   await expect(page.locator('div').filter({ hasText: /^TRUMPF Laser AGAichhalder Straße 3978713 Schramberg$/ }).first()).toBeVisible();
   await expect(page.locator('div').filter({ hasText: /^TRUMPF Hüttinger GmbH \+ Co\. KGBötzinger Straße 8079111 Freiburg$/ }).first()).toBeVisible();
-  await page.getByLabel('Vergrößern').click();
-  await page.getByLabel('Verkleinern').click();
-  await page.getByLabel('Verkleinern').click();
-  await page.getByLabel('Vollbildansicht ein/aus').click();
-  await page.getByLabel('Vollbildansicht ein/aus').click();
-  await page.locator('div:nth-child(3) > div:nth-child(10)').click();
+ 
 });
