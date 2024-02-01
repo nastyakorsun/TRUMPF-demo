@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('test', async ({ page }) => {
+test('Check the possibility to register for newsletter', async ({ page }) => {
   await page.goto('https://www.trumpf.com/de_DE/');
   await page.getByRole('button', { name: 'Alle Cookies akzeptieren' }).click();
  
