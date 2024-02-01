@@ -6,7 +6,7 @@ test('Check the possibility to register for newsletter', async ({ page }) => {
  
   await page.getByRole('link', { name: 'Newsletter-Anmeldung' }).click();
   await page.getByLabel('E-Mail\n\t\t\t\t\n*').click();
-  await page.getByLabel('E-Mail\n\t\t\t\t\n*').fill('tol.nk.np@gmail.com');
+  await page.getByLabel('E-Mail\n\t\t\t\t\n*').fill('test1@galaniprojectsteam.testinator.com');
   await page.locator('#powermail_field_newsletteranmeldung-600343-salutation').selectOption('3');
   await page.getByLabel('Vorname').click();
   await page.getByLabel('Vorname').fill('Kate');
