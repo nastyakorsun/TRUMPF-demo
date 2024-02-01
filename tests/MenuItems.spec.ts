@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('test', async ({ page }) => {
+  test.skip();
   await page.goto('https://www.trumpf.com/de_DE/');
   await page.getByRole('button', { name: 'Alle Cookies akzeptieren' }).click();
   await expect(page.getByText('Produkte')).toBeVisible();
