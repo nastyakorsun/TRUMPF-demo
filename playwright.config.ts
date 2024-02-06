@@ -10,7 +10,7 @@ import { defineConfig, devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: '/Users/korsun/Desktop/TRUMPF-demo-neu/TRUMPF-demo/tests',
+  testDir: './tests',
  
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
