@@ -30,5 +30,33 @@ test('Formulare Produktanfrage', async ({ page }) => {
   await page.getByLabel('Folgende Produkte interessieren mich / Ihre Nachricht an uns:\n\t\t\t\t\n*').fill('test');
   await page.locator('#powermail_field_newsletter_0').check();
   await page.getByRole('button', { name: 'Absenden' }).click();
-  await expect (page.getByText('Vielen Dank für Ihre Anfrage, wir werden uns mit Ihnen in Verbindung setzen.')).toBeVisible(); 
-});
+  await expect (page.getByText('Vielen Dank für Ihre Anfrage, wir werden uns mit Ihnen in Verbindung setzen.')).toBeVisible();  
+}); 
+
+
+test('Check the email and click on the conformation link', async ({ page }) => {
+    await page.goto('https://www.mailinator.com/');
+    await page.locator('#menu-item-7937').getByRole('link', { name: 'LOGIN' }).click();
+    
+    await page.locator('input[placeholder="Email"]').fill('korsun@galaniprojects.com');
+    await page.locator('input[placeholder="Password"]').fill('Tonand1999');
+    await page.locator('input[placeholder="Password"]').press('Enter'); 
+  
+    const firstEmailSelector = 'tr.ng-scope:first-child';
+    await page.waitForSelector(firstEmailSelector);
+    await page.click(firstEmailSelector); 
+
+    const page1Promise = page.waitForEvent('popup'); 
+    
+
+    await page.frameLocator('iframe[name="texthtml_msg_body"]').getByRole('link', { name: new RegExp('^https://de.trumpf-news.com/go') }).click();
+    const page1 = await page1Promise;
+    await page1.getByRole('button', { name: 'Alle Cookies akzeptieren' }).click();
+    await expect(page1.getByRole('heading', { name: 'Newsletteranmeldung erfolgreich' })).toBeVisible();
+
+  
+   
+   
+  });
+
+  
