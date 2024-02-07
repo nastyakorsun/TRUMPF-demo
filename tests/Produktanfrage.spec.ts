@@ -25,7 +25,7 @@ test('Formulare Produktanfrage', async ({ page }) => {
   await page.getByLabel('Telefon\n\t\t\t\t\n*').click();
   await page.getByLabel('Telefon\n\t\t\t\t\n*').fill('1234567890');
   await page.getByLabel('E-Mail\n\t\t\t\t\n*').click();
-  await page.getByLabel('E-Mail\n\t\t\t\t\n*').fill('test@testing.com');
+  await page.getByLabel('E-Mail\n\t\t\t\t\n*').fill('test65@galaniprojectsteam.testinator.com');
   await page.getByLabel('Folgende Produkte interessieren mich / Ihre Nachricht an uns:\n\t\t\t\t\n*').click();
   await page.getByLabel('Folgende Produkte interessieren mich / Ihre Nachricht an uns:\n\t\t\t\t\n*').fill('test');
   await page.locator('#powermail_field_newsletter_0').check();
