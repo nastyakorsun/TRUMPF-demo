@@ -25,7 +25,7 @@ test('Formulare Produktanfrage', async ({ page }) => {
   await page.getByLabel('Telefon\n\t\t\t\t\n*').click();
   await page.getByLabel('Telefon\n\t\t\t\t\n*').fill('1234567890');
   await page.getByLabel('E-Mail\n\t\t\t\t\n*').click();
-  await page.getByLabel('E-Mail\n\t\t\t\t\n*').fill('test65@galaniprojectsteam.testinator.com');
+  await page.getByLabel('E-Mail\n\t\t\t\t\n*').fill('produkt@galaniprojectsteam.testinator.com');
   await page.getByLabel('Folgende Produkte interessieren mich / Ihre Nachricht an uns:\n\t\t\t\t\n*').click();
   await page.getByLabel('Folgende Produkte interessieren mich / Ihre Nachricht an uns:\n\t\t\t\t\n*').fill('test');
   await page.locator('#powermail_field_newsletter_0').check();
@@ -39,7 +39,7 @@ test('Check the email and click on the conformation link', async ({ page }) => {
     await page.locator('#menu-item-7937').getByRole('link', { name: 'LOGIN' }).click();
     
     await page.locator('input[placeholder="Email"]').fill('korsun@galaniprojects.com');
-    await page.locator('input[placeholder="Password"]').fill('Tonand1999');
+    await page.locator('input[placeholder="Password"]').fill('IWilltest42!');
     await page.locator('input[placeholder="Password"]').press('Enter'); 
   
     const firstEmailSelector = 'tr.ng-scope:first-child';
