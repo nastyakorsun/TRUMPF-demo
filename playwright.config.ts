@@ -10,6 +10,7 @@ import { defineConfig, devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
+  workers:1,
   testDir: './tests',
  
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
@@ -22,6 +23,10 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    headless: false, //true
+    
+
+
   },
 
   /* Configure projects for major browsers */
@@ -42,10 +47,10 @@ export default defineConfig({
     // },
 
     /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
+    {
+       name: 'Mobile_Chrome',
+       use: { ...devices['Pixel 5'] },
+     },
     // {
     //   name: 'Mobile Safari',
     //   use: { ...devices['iPhone 12'] },
