@@ -62,7 +62,7 @@ test('5 Jahre Garantie - Registrierung', async ({ page }) => {
     await fillFormField('Ort\n                        *', 'test');
     await page.locator('#powermail_field_land').selectOption('54');
     await fillFormField('Telefon', '01238760985');
-    await fillFormField('E-Mail Adresse\n                        *', 'test@galaniprojectsteam.testinator.com');
+    await fillFormField('E-Mail Adresse\n                        *', 'test5Jahre@galaniprojectsteam.testinator.com');
 
     // Klicken des "Weiter"-Buttons
     const weiterButton = await page.getByRole('link', { name: 'Weiter' });
