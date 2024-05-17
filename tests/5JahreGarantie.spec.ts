@@ -125,15 +125,14 @@ for (const option of options) {
 
 
 // Überprüfen Sie, ob alle obligatorischen Felder ausgefüllt sind
- // Klicken des "Weiter"-Buttons
- await weiterButton.click();
+// Klicken des "Weiter"-Buttons
+await weiterButton.click();
 for (const field of mandatoryFields) {
     const isEmpty = await field.evaluate(node => (node as HTMLInputElement).value === '');
     if (isEmpty) {
         const fieldId = await field.evaluate(node => (node as HTMLElement).id);
         const errorElement = await page.locator(`#${fieldId} ~ .label-errorMsg.filled`);
-        const errorMessage = await errorElement.innerText();
-        expect(errorMessage).toBe('This Field must not be empty.');
+        await expect(errorElement).toHaveText('This Field must not be empty.');
     }
 }
 
