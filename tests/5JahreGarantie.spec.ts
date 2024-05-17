@@ -157,10 +157,64 @@ for (const field of mandatoryFields) {
         // Klicken des "Weiter"-Buttons
         await weiterButton.click();
     
-        // Auswahl aus zusätzlichen Dropdown-Menüs
+
+
+
+// Liste aller Dropdown-Optionen und ihrer erwarteten Texte
+const dropdownOptions = [
+    { value: '0', text: 'Bitte wählen ...' },
+    { value: '1', text: 'Maschinen- und Anlagenbau' },
+    { value: '2', text: 'Fahrzeug- und Karosseriebau' },
+    { value: '3', text: 'Behälter- und Apparatebau' },
+    { value: '4', text: 'Lüftungs- und Klimatechnik' },
+    { value: '5', text: 'Spenglerei/Klempnerei' },
+    { value: '6', text: 'Isolierer' },
+    { value: '7', text: 'Sonstige Klima, Sanitär und Energietechnik' },
+    { value: '8', text: 'Weisse Ware' },
+    { value: '9', text: 'Elektrik, Elektronik' },
+    { value: '10', text: 'Bedachung / Dachdeckerei' },
+    { value: '11', text: 'Fassadenbauer' },
+    { value: '12', text: 'Schlosserei' },
+    { value: '13', text: 'Sonstige Stahl- und Metallbauhandwerk' },
+    { value: '14', text: 'Tankdemontage / Abbruch' },
+    { value: '15', text: 'Sicherheit, Wehrtechnik' },
+    { value: '16', text: 'Sonstige' }
+];
+
+// Durch jede Option
+for (const dropdownOption of dropdownOptions) {
+    // Option aus Dropdown-Menü wählen
+    await page.locator('select[name="tx_trumpfforms_trumpfforms\\[warranty\\]\\[2\\]\\[BRANCHES\\]"]').selectOption(dropdownOption.value);
+
+    // Überprüfen Sie, ob die Auswahl erfolgreich war
+    const chosenOption = await page.$eval('select[name="tx_trumpfforms_trumpfforms\\[warranty\\]\\[2\\]\\[BRANCHES\\]"]', (el: HTMLSelectElement) => el.value);
+    if (chosenOption !== dropdownOption.value) {
+        console.log(`Fehler: Die ausgewählte Option ist ${chosenOption}, sollte aber ${dropdownOption.value} sein.`);
+    } else {
+        console.log(`Erfolg: Die ausgewählte Option ist ${dropdownOption.value}.`);
+    }
+
+    // Überprüfen Sie den Text der ausgewählten Option
+    const chosenOptionText = await page.$eval('select[name="tx_trumpfforms_trumpfforms\\[warranty\\]\\[2\\]\\[BRANCHES\\]"] option:checked', (el: HTMLOptionElement) => el.text);
+    if (chosenOptionText !== dropdownOption.text) {
+        console.log(`Fehler: Der Text der ausgewählten Option ist "${chosenOptionText}", sollte aber "${dropdownOption.text}" sein.`);
+    } else {
+        console.log(`Erfolg: Der Text der ausgewählten Option ist "${dropdownOption.text}".`);
+    }
+
+}   
+   // Auswahl aus zusätzlichen Dropdown-Menüs
         await page.locator('select[name="tx_trumpfforms_trumpfforms\\[warranty\\]\\[2\\]\\[BRANCHES\\]"]').selectOption('9');
         await page.locator('select[name="tx_trumpfforms_trumpfforms\\[warranty\\]\\[2\\]\\[EMPLOYEES\\]"]').selectOption('3');
     
+// Überprüfen Sie den Text des Elements
+const element = await page.locator('.powermail_fieldwrap.powermail_fieldwrap_type_text.powermail_fieldwrap_.no-gutter-left.gr-12');
+await expect(element).toHaveText('Mehr zum Thema Datenschutz bei TRUMPF finden Sie in unserer Datenschutzerklärung.');
+
+// Überprüfen Sie die URL der Verknüpfung
+const link = await page.locator('div.powermail_fieldwrap a');
+await expect(link).toHaveAttribute('href', '/de_DE/meta/datenschutz/');
+
         // Absenden des Formulars
         const submitButton = await page.getByRole('button', { name: 'Absenden' });
     
