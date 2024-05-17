@@ -57,20 +57,15 @@ test.describe('5 Jahre Garantie Tests', () => {
         'TruTool ID 1861', 'TruTool FCN 250', 'TruTool PS 100'
          ]; 
     
-    
-        // Durch jede Option
-        for (const option of options) {
-        // Option aus Dropdown-Menü wählen
-        await page.selectOption('#powermail_field_typ', { value: option });
-    
-        // Überprüfen Sie, ob die Auswahl erfolgreich war
-        const selectedOption = await page.$eval('#powermail_field_typ', (el: HTMLSelectElement) => el.value);
-        if (selectedOption !== option) {
-            console.log(`Fehler: Die ausgewählte Option ist ${selectedOption}, sollte aber ${option} sein.`);
-        } else {
-            console.log(`Erfolg: Die ausgewählte Option ist ${option}.`);
-        }
-     }
+// Durch jede Option
+for (const option of options) {
+    // Option aus Dropdown-Menü wählen
+    await page.selectOption('#powermail_field_typ', { value: option });
+
+    // Überprüfen Sie, ob die Auswahl erfolgreich war
+    const selectedOptionElement = await page.locator('#powermail_field_typ option[value="' + option + '"]:checked');
+    await expect(selectedOptionElement).toHaveText(option);
+}
     
         
         // Seriennummer eingeben
@@ -187,22 +182,9 @@ for (const dropdownOption of dropdownOptions) {
     await page.locator('select[name="tx_trumpfforms_trumpfforms\\[warranty\\]\\[2\\]\\[BRANCHES\\]"]').selectOption(dropdownOption.value);
 
     // Überprüfen Sie, ob die Auswahl erfolgreich war
-    const chosenOption = await page.$eval('select[name="tx_trumpfforms_trumpfforms\\[warranty\\]\\[2\\]\\[BRANCHES\\]"]', (el: HTMLSelectElement) => el.value);
-    if (chosenOption !== dropdownOption.value) {
-        console.log(`Fehler: Die ausgewählte Option ist ${chosenOption}, sollte aber ${dropdownOption.value} sein.`);
-    } else {
-        console.log(`Erfolg: Die ausgewählte Option ist ${dropdownOption.value}.`);
-    }
-
-    // Überprüfen Sie den Text der ausgewählten Option
-    const chosenOptionText = await page.$eval('select[name="tx_trumpfforms_trumpfforms\\[warranty\\]\\[2\\]\\[BRANCHES\\]"] option:checked', (el: HTMLOptionElement) => el.text);
-    if (chosenOptionText !== dropdownOption.text) {
-        console.log(`Fehler: Der Text der ausgewählten Option ist "${chosenOptionText}", sollte aber "${dropdownOption.text}" sein.`);
-    } else {
-        console.log(`Erfolg: Der Text der ausgewählten Option ist "${dropdownOption.text}".`);
-    }
-
-}   
+    const selectedOptionElement = await page.locator('select[name="tx_trumpfforms_trumpfforms\\[warranty\\]\\[2\\]\\[BRANCHES\\]"] option[value="' + dropdownOption.value + '"]:checked');
+    await expect(selectedOptionElement).toHaveText(dropdownOption.text);
+} 
    // Auswahl aus zusätzlichen Dropdown-Menüs
         await page.locator('select[name="tx_trumpfforms_trumpfforms\\[warranty\\]\\[2\\]\\[BRANCHES\\]"]').selectOption('9');
         await page.locator('select[name="tx_trumpfforms_trumpfforms\\[warranty\\]\\[2\\]\\[EMPLOYEES\\]"]').selectOption('3');
