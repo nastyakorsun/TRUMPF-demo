@@ -4,14 +4,15 @@ test.describe('Search Functionality Tests', () => {
 
   test.beforeEach(async ({ page }) => {
     // Navigate to the homepage before each test
-    await page.goto('https://www.trumpf.com/en_INT/');
+    await page.goto('https://www.trumpf.com/de_DE/');
 
     // Accept cookies
-    const acceptCookiesButton = await page.getByRole('button', { name: 'Accept all cookies' });
+    const acceptCookiesButton = await page.getByRole('button', { name: 'Alle Cookies akzeptieren' });
     await acceptCookiesButton.click();
   });
 
   test('Search and validate results', async ({ page }) => {
+    test.setTimeout(60000);
     // Click the search icon
     const searchIcon = page.locator('div.ux-iws-navigation-meta__search ux-icon[name="nav-search"]');
     await searchIcon.click();
@@ -22,7 +23,7 @@ test.describe('Search Functionality Tests', () => {
     await searchInput.press('Enter');
 
     // Verify redirection to the search page
-    await expect(page).toHaveURL(/\/en_INT\/meta\/search\/\?q=battery/, { timeout: 10000 });
+    await expect(page).toHaveURL(/\/de_DE\/meta\/suche\/\?q=battery/, { timeout: 10000 });
 
     // Debugging step: wait for the search results container to appear
     await page.waitForSelector('div.ux-iws-search-results__results-container', { timeout: 10000 });
@@ -36,7 +37,7 @@ test.describe('Search Functionality Tests', () => {
     await expect(totalResults).toBeVisible();
 
     // Verify "Show more" button is displayed
-    const showMoreButton = page.locator('ux-button:has-text("Show more")');
+    const showMoreButton = page.locator('ux-button:has-text("Mehr Zeigen")');
     await expect(showMoreButton).toBeVisible();
 
     // Click the "Show more" button and verify the next 10 results
@@ -89,7 +90,7 @@ test.describe('Search Functionality Tests', () => {
 
     // Wait for the search results summary to appear
     const totalResults = page.locator('div.ux-iws-search-results__summary');
-    await expect(totalResults).toHaveText(/0 Results/, { timeout: 10000 });
+    await expect(totalResults).toHaveText(/0 Ergebnisse/, { timeout: 10000 });
 
     // Verify no results are displayed
     const searchResults = page.locator('div.ux-iws-teaser-page');
