@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { MailinatorPage } from '../pages/MailinatorPage';
 
 test.describe('Whitepaper Request Form Tests', () => {
 
@@ -66,54 +67,22 @@ test.describe('Whitepaper Request Form Tests', () => {
   });
 
   test('Login to Mailinator, open email and click on attachments tab', async ({ page }) => {
-    await test.step('Go to Mailinator', async () => {
-      await page.goto('https://www.mailinator.com/');
+    const mailinatorPage = new MailinatorPage(page);
+
+    await test.step('Login to Mailinator', async () => {
+      await mailinatorPage.login('korsun@galaniprojects.com', 'IWilltest42!');
     });
 
-    await test.step('Click on the LOGIN link', async () => {
-      await page.locator('#menu-item-7937').getByRole('link', { name: 'LOGIN' }).click();
-    });
-
-    await test.step('Fill in the login credentials and press Enter', async () => {
-      await page.locator('input[placeholder="Email"]').fill('korsun@galaniprojects.com');
-      await page.locator('input[placeholder="Password"]').fill('IWilltest42!');
-      await page.locator('input[placeholder="Password"]').press('Enter');
-    });
-
-    await test.step('Wait for the email list to load and click on the first email', async () => {
-      const firstEmailSelector = 'tr.ng-scope:first-child';
-      await page.waitForSelector(firstEmailSelector);
-      await page.click(firstEmailSelector);
-    });
-
-    await test.step('Wait for the email content to load', async () => {
-      await page.waitForLoadState();
+    await test.step('Open the email with subject "test_de"', async () => {
+      await mailinatorPage.openEmailBySubject('test');
     });
 
     await test.step('Click on the "ATTACHMENTS" tab', async () => {
-      const attachmentsTabSelector = 'a#pills-attachments-tab';
-      await page.click(attachmentsTabSelector);
+      await mailinatorPage.clickAttachmentsTab();
     });
 
-    await test.step('Verify the presence of the download button', async () => {
-      const attachmentsSectionSelector = '#pills-attachments-content';
-      await page.waitForSelector(attachmentsSectionSelector);
-      const downloadButtonSelector = 'button.btn.btn-xs.btn-dark';
-      const downloadButton = page.locator(downloadButtonSelector);
-      await expect(downloadButton).toHaveText('TRUMPF-Whitepaper-Selektive-Reinigung-mittels-Laser.pdf');
-    });
-
-    await test.step('Click the download button and verify that the download starts', async () => {
-      const downloadButtonSelector = 'button.btn.btn-xs.btn-dark';
-      const downloadButton = page.locator(downloadButtonSelector);
-      const [download] = await Promise.all([
-        page.waitForEvent('download'), 
-        downloadButton.click(), 
-      ]);
-      const downloadPath = await download.path();
-      const downloadName = download.suggestedFilename();
-      console.log(`Download started: ${downloadName}`);
-      await expect(downloadName).toBe('TRUMPF-Whitepaper-Selektive-Reinigung-mittels-Laser.pdf');
+    await test.step('Verify and download attachment', async () => {
+      await mailinatorPage.verifyAndDownloadAttachment('TRUMPF-Whitepaper-Selektive-Reinigung-mittels-Laser.pdf');
     });
   });
 });
