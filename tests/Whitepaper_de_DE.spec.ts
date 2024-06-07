@@ -28,7 +28,7 @@ test.describe('Whitepaper Request Form Tests', () => {
       await page.fill('input[name="tx_trumpfforms_multiplewhitepaper[whitepaperux_standard][vorname]"]', 'Test');
       await page.fill('input[name="tx_trumpfforms_multiplewhitepaper[whitepaperux_standard][nachname]"]', 'Test');
       await page.fill('input[name="tx_trumpfforms_multiplewhitepaper[whitepaperux_standard][company-1]"]', 'Test GmbH');
-      await page.fill('input[name="tx_trumpfforms_multiplewhitepaper[whitepaperux_standard][email]"]', 'test_de@galaniprojectsteam.testinator.com');
+      await page.fill('input[name="tx_trumpfforms_multiplewhitepaper[whitepaperux_standard][email]"]', 'test_de_whitepaper@galaniprojectsteam.testinator.com');
     }); 
 // Note: If the part before the domain in the email address remains the same each time, 
 // the system will not send a newsletter registration confirmation email. 
@@ -73,7 +73,7 @@ test.describe('Whitepaper Request Form Tests', () => {
       await mailinatorPage.login('korsun@galaniprojects.com', 'IWilltest42!');
     });
 
-    await test.step('Open the email with subject "test_de"', async () => {
+    await test.step('Open the email with subject "test_de_whitepaper"', async () => {
       await mailinatorPage.openEmailBySubject('test');
     });
 
