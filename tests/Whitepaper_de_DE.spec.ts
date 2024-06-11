@@ -74,7 +74,7 @@ test.describe('Whitepaper Request Form Tests', () => {
     });
 
     await test.step('Open the email with subject "test_de_whitepaper"', async () => {
-      await mailinatorPage.openEmailBySubject('test');
+      await mailinatorPage.openEmailBySubject('test_de_whitepaper');
     });
 
     await test.step('Click on the "ATTACHMENTS" tab', async () => {
