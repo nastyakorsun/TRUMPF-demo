@@ -32,6 +32,10 @@ export class MailinatorPage {
     async clickAttachmentsTab() {
         const attachmentsTabSelector = 'a#pills-attachments-tab';
         await this.page.click(attachmentsTabSelector);
+    } 
+
+    async clickLinkInEmail(linkText: string) {
+        await this.page.frameLocator('iframe[name="texthtml_msg_body"]').getByRole('link', { name: linkText }).click({ timeout: 10000 });
     }
 
     async verifyAndDownloadAttachment(expectedFileName: string) {
