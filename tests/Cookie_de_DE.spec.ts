@@ -14,6 +14,7 @@ test('Check cookie settings', async ({ page }) => {
   });
 
   await test.step('Scroll down to the footer and open privacy settings again', async () => {
+    await page.waitForLoadState('load');
     await page.locator('#mainContent > footer > div > ul > li:nth-child(4) > a, a[data-ux-cookie-layer="settings"]').click();
   });
 
@@ -23,6 +24,7 @@ test('Check cookie settings', async ({ page }) => {
   });
 
   await test.step('Open the privacy settings again to verify', async () => {
+    await page.waitForLoadState('load');
     await page.locator('#mainContent > footer > div > ul > li:nth-child(4) > a, a[data-ux-cookie-layer="settings"]').click();
     await expect(page.locator('.ux-cookie-layer-switch--on:not(.ux-cookie-layer-switch--disabled)')).toBeVisible();
   });
@@ -33,12 +35,14 @@ test('Check cookie settings', async ({ page }) => {
   });
 
   await test.step('Make changes in the settings again but click on "close" instead of "save"', async () => {
+    await page.waitForLoadState('load');
     await page.locator('#mainContent > footer > div > ul > li:nth-child(4) > a, a[data-ux-cookie-layer="settings"]').click();
     await page.locator('.ux-cookie-layer-switch--off:not(.ux-cookie-layer-switch--disabled) button').click();
     await page.locator('button[type="button"].ux-cookie-layer-modal__close').click();
   });
 
   await test.step('Verify that the changes are not taken over', async () => {
+    await page.waitForLoadState('load');
     await page.locator('#mainContent > footer > div > ul > li:nth-child(4) > a, a[data-ux-cookie-layer="settings"]').click();
     await expect(page.locator('.ux-cookie-layer-switch--off:not(.ux-cookie-layer-switch--disabled)')).toBeVisible();
   });
