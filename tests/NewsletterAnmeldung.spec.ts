@@ -1,12 +1,13 @@
 import { test, expect } from '@playwright/test';
 import { MailinatorPage } from '../pages/MailinatorPage';
+import { generateUniqueEmail } from '../utils';
 
 test.describe('Newsletter Signup and Confirmation Tests', () => {
 
   test('Newsletter Signup and Confirmation', async ({ page, context }) => {
     // Generate a unique email for this test run using the current timestamp
-    const timestamp = Date.now();
-    const uniqueEmail = `test_de_newsletter${timestamp}@galaniprojectsteam.testinator.com`;
+    const { email, subject } = generateUniqueEmail('test_de_Newsletter', 'galaniprojectsteam.testinator.com');
+
     
 
     await test.step('Navigate to TRUMPF homepage', async () => {
@@ -42,7 +43,7 @@ test.describe('Newsletter Signup and Confirmation Tests', () => {
       await page.getByLabel('Land/Region').fill('d');
       await page.getByText('Deutschland', { exact: true }).click();
       await page.locator('#powermail_field_newsletter_0').click();
-      await page.getByLabel('E-Mail\n\t\t\t\t\n*').fill(`test_de_newsletter${timestamp}@galaniprojectsteam.testinator.com`);
+      await page.getByLabel('E-Mail\n\t\t\t\t\n*').fill(email);
       await page.getByRole('button', { name: 'Absenden' }).click();
     });
 
@@ -59,8 +60,8 @@ test.describe('Newsletter Signup and Confirmation Tests', () => {
       await mailinatorPage.login('korsun@galaniprojects.com', 'IWilltest42!');
     });
 
-    await test.step(`Open the email with subject "${uniqueEmail}"`, async () => {
-      await mailinatorPage.openEmailBySubject(`test_de_newsletter${timestamp}`);
+    await test.step(`Open the email with subject "${email}"`, async () => {
+      await mailinatorPage.openEmailBySubject(subject);
     });
 
     await test.step('Click the confirmation link in the email', async () => {
