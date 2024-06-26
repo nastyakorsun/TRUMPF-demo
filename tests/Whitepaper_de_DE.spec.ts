@@ -76,14 +76,15 @@ test.describe('Whitepaper Request Form Tests', () => {
     await test.step('Open the email with subject "test_de_whitepaper"', async () => {
       await mailinatorPage.openEmailBySubject('test_de_whitepaper');
     });
-
-    await test.step('Click on the "ATTACHMENTS" tab', async () => {
+    
+//commented out due to the fact that our mailinator subscribcion does not support attachments any more
+   /* await test.step('Click on the "ATTACHMENTS" tab', async () => {
       await mailinatorPage.clickAttachmentsTab();
     });
 
     await test.step('Verify and download attachment', async () => {
       await mailinatorPage.verifyAndDownloadAttachment('TRUMPF-Whitepaper-Selektive-Reinigung-mittels-Laser.pdf');
-    });
+    });*/
   });
 });
 
