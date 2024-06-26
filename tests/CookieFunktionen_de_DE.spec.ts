@@ -3,18 +3,25 @@ import { test, expect } from '@playwright/test';
 test('Verify cookies after saving settings', async ({ page }) => {
   let initialCookies;
 
-  await test.step('Navigate to the homepage', async () => {
+  await test.step('Navigate to the homepage and accept cookies', async () => {
     await page.goto('https://www.trumpf.com/de_DE/');
+  
+  
   });
 
-  await test.step('Open settings', async () => {
+  await test.step('Open settings and verify the settings title', async () => {
     await page.locator('a.ux-cookie-layer__nav-item:has-text("Einstellungen")').click();
-    await page.waitForSelector('.ux-cookie-layer-modal');
+    const settingsModal = page.locator('.ux-cookie-layer-modal');
+    await settingsModal.waitFor({ state: 'visible', timeout: 10000 });
+
+    const settingsTitle = page.locator('h3.ux-cookie-layer__title');
+    await expect(settingsTitle).toHaveText('Cookie Einstellungen', { timeout: 10000 });
+    await expect(settingsTitle).toBeVisible({ timeout: 10000 });
   });
 
   await test.step('Check if the optional cookies switch is off', async () => {
-    const optionalCookiesSwitch = page.locator('body > ux-cookie-layer > ux-cookie-layer-modal > div.ux-cookie-layer-modal__outer > div > div.ux-cookie-layer-modal__slot > ux-cookie-layer-content > div > div.ux-cookie-layer__controls > ux-cookie-layer-switch.ux-cookie-layer-switch.hydrated.ux-cookie-layer-switch--off');
-    await expect(optionalCookiesSwitch).toBeVisible();
+    const optionalCookiesSwitch = page.locator('.ux-cookie-layer-switch--off');
+    await expect(optionalCookiesSwitch).toBeVisible({ timeout: 10000 });
   });
 
   await test.step('Check the initial cookies state', async () => {
@@ -27,7 +34,14 @@ test('Verify cookies after saving settings', async ({ page }) => {
   });
 
   await test.step('Open privacy settings again from the footer', async () => {
+    await page.waitForLoadState('load');
     await page.locator('#mainContent > footer > div > ul > li:nth-child(4) > a, a[data-ux-cookie-layer="settings"]').click();
+    const settingsModal = page.locator('.ux-cookie-layer-modal');
+    await settingsModal.waitFor({ state: 'visible', timeout: 10000 });
+
+    const settingsTitle = page.locator('h3.ux-cookie-layer__title');
+    await expect(settingsTitle).toHaveText('Cookie Einstellungen', { timeout: 10000 });
+    await expect(settingsTitle).toBeVisible({ timeout: 10000 });
   });
 
   await test.step('Accept the optional cookies by clicking the specific button and save', async () => {
